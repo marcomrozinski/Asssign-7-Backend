@@ -3,6 +3,7 @@ package com.example.accessing_data_rest.service;
 import com.example.accessing_data_rest.model.User;
 import com.example.accessing_data_rest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +27,12 @@ public class UserController {
 
     @PostMapping("/signin")
     public ResponseEntity<User> signIn(@RequestBody User user) {
-        User loggedInUser = userService.signIn(user.getName(), user.getPassword());
-        return ResponseEntity.ok(loggedInUser);
+        try {
+            User loggedInUser = userService.signIn(user.getName(), user.getPassword());
+            return ResponseEntity.ok(loggedInUser);
+        } catch (RuntimeException e) {
+            // Hvis login fejler, returner 401 i stedet for 500
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);  // 401 Unauthorized
+        }
     }
 }
