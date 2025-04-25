@@ -19,12 +19,7 @@ public class User {
     //      the other way round (similar to the reference from Game to Player
     //      and the other way round.
 
-    @OneToMany(mappedBy = "user")
-    private List<Player> players;
-
-
-
-public long getUid() {
+    public long getUid() {
         return uid;
     }
 
@@ -39,6 +34,10 @@ public long getUid() {
     public void setName(String name) {
         this.name = name;
     }
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Player> players;
+
     public List<Player> getPlayers() {
         return players;
     }
@@ -46,5 +45,15 @@ public long getUid() {
     public void setPlayers(List<Player> players) {
         this.players = players;
     }
-}
 
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+}
