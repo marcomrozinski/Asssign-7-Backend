@@ -45,5 +45,8 @@ public class Player {
     public void setGame(Game game) {
         this.game = game;
     }
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
 }
