@@ -4,6 +4,8 @@ import com.example.accessing_data_rest.model.User;
 import com.example.accessing_data_rest.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,14 +19,19 @@ public class UserService {
     public User signUp(String name, String password) {
         List<User> existing = userRepository.findByName(name);
         if (!existing.isEmpty()) {
-            throw new RuntimeException("Brugernavn allerede i brug");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already exists");
         }
 
         User user = new User();
         user.setName(name);
         user.setPassword(password);
-        return userRepository.save(user);
+
+        // Check if the user is saved correctly
+        System.out.println("User to be saved: " + user);  // Debugging line
+
+        return userRepository.save(user);  // Sørg for at returnere den korrekt gemte bruger
     }
+
 
     public User signIn(String name, String password) {
         List<User> users = userRepository.findByName(name);

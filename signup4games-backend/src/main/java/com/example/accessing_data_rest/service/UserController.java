@@ -15,9 +15,14 @@ public class UserController {
 
     @PostMapping("/signup")
     public ResponseEntity<User> signUp(@RequestBody User user) {
+        System.out.println("Received user name: " + user.getName());  // Debugging: Udskriv userens name
         User createdUser = userService.signUp(user.getName(), user.getPassword());
+        System.out.println("Created User: " + createdUser);  // Sørg for at denne linje udskriver det rigtige objekt
+
+        // Returner brugeren med UID, name og password korrekt
         return ResponseEntity.ok(createdUser);
     }
+
 
     @PostMapping("/signin")
     public ResponseEntity<User> signIn(@RequestBody User user) {

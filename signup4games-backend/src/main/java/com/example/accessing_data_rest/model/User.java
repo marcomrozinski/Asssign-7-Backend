@@ -7,6 +7,9 @@ import java.util.List;
 @Entity
 @Table(name="user_table") // this is important! "user" is a keyword in H2 and not an identifier
 public class User {
+    public User() {
+        // default constructor needed for JSON mapping
+    }
 
     @Id
     @Column(name = "user_id")
@@ -54,6 +57,15 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "uid=" + uid +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 
 }
