@@ -24,7 +24,7 @@ public class Game {
     //      you might not want new players coming in etc.)
     //      See analogous classes in client.
 
-    @OneToMany(mappedBy="game")
+    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Player> players;
 
     public long getUid() {
@@ -66,6 +66,17 @@ public class Game {
 
     public void setPlayers(List<Player> players) {
         this.players = players;
+    }
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private User owner;
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 
 }
